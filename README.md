@@ -1,0 +1,2 @@
+# rimg
+Quick image resizer
