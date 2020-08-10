@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "ignore": [
+    "dist"
+  ],
+  "watch": [
+    "server/"
+  ],
+  "ext": "ts"
+}
