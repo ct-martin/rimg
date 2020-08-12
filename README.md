@@ -1,13 +1,16 @@
 # rimg
 Image resizing microservice
 
+![Code Tests](https://github.com/ct-martin/rimg/workflows/Code%20Tests/badge.svg?branch=master)
+[![pipeline status](https://gitlab.com/ctmartin/rimg/badges/master/pipeline.svg)](https://gitlab.com/ctmartin/rimg/-/commits/master)
+
 ## Goals
 * Resize images
 * As fast as possible
 * Support both generic `width`/`height` and oEmbed `maxwidth`/`maxheight`
 * Basic abuse prevention
   * Forward Referer to origin and CORS headers back
-  * Optional whitelist of allowed hostnames to resize from
+  * Optional list of allowed hostnames to resize from
   * MIME checking of requested image
 
 ## Running
