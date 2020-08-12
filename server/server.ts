@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import fetch from 'node-fetch';
 import sharp from 'sharp';
 import {
+  checkAllowedHostname,
   checkMime,
   getFetchOptions,
   getImgUrl,
@@ -41,7 +42,7 @@ app.get('/', async (request, res) => {
   }
 
   // Error if not on valid list
-  if (HOSTNAMES && !HOSTNAMES.includes(imgUrl.hostname)) {
+  if (!checkAllowedHostname(HOSTNAMES, imgUrl.hostname)) {
     res.status(400).send('Not an allowed hostname');
     return;
   }

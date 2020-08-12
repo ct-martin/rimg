@@ -2,6 +2,7 @@ import { URL } from 'url';
 import { ResizeOptions } from 'sharp';
 import { Response as FetchResponse, RequestInit } from 'node-fetch';
 import {
+  checkAllowedHostname,
   checkMime,
   forwardHeaders,
   getDimension,
@@ -52,6 +53,21 @@ describe('getImgUrl', () => {
   test('will return a ?url parameter with a valid url', () => {
     const url = new URL('https://example.com/?url=https://example.org/');
     expect(getImgUrl(url)).toEqual(new URL('https://example.org/'));
+  });
+});
+
+describe('checkAllowedHostname', () => {
+  test('will pass if no allowlist', () => {
+    const names = undefined;
+    expect(checkAllowedHostname(names, 'example.com')).toBe(true);
+  });
+  test('will fail if not on allowlist', () => {
+    const names = ['example.org'];
+    expect(checkAllowedHostname(names, 'example.com')).toBe(false);
+  });
+  test('will pass if on allowlist', () => {
+    const names = ['example.com'];
+    expect(checkAllowedHostname(names, 'example.com')).toBe(true);
   });
 });
 

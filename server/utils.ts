@@ -34,6 +34,21 @@ export function getImgUrl(url: URL): URL | null {
 }
 
 /**
+ * Checks if an allowlist is set and if so whether the hostname passes
+ * @param hostname Hostname of image being fetched
+ * @returns Boolean of whether allowed
+ */
+export function checkAllowedHostname(HOSTNAMES: string[]|undefined, hostname: string): boolean {
+  // If no allowlist, let anything pass
+  if (!HOSTNAMES) {
+    return true;
+  }
+
+  // If allowlist, check if included
+  return HOSTNAMES.includes(hostname);
+}
+
+/**
  * Takes searchparams and parses for valid size dimension
  * @param param searchParam
  * @returns Number, or undefined if error
