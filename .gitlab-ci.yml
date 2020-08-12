@@ -24,6 +24,11 @@ deploy:
   image: ilyasemenov/gitlab-ci-git-push
   stage: deploy
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - "**/*.ts"
+      - "**/*.js"
+      - "**/*.json"
   script:
     - git-push ssh://dokku@$REMOTE_HOST/$APP_NAME
