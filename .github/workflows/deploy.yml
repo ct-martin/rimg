@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: mirror-repository
-        uses: spyoungtech/mirror-action@spyoungtech-patch-1
+        uses: ct-martin/mirror-action@master
         with:
           REMOTE: ${{ secrets.GIT_REMOTE }}
           GIT_USERNAME: dokku
