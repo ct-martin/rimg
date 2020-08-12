@@ -13,6 +13,11 @@ cache:
 test:
   stage: test
   image: node:latest
+  only:
+    changes:
+      - "**/*.ts"
+      - "**/*.js"
+      - "**/*.json"
 
   before_script:
     - npm ci --cache .npm --prefer-offline
@@ -21,8 +26,8 @@ test:
    - npm test
 
 deploy:
-  image: ilyasemenov/gitlab-ci-git-push
   stage: deploy
+  image: ilyasemenov/gitlab-ci-git-push
   only:
     refs:
       - master
