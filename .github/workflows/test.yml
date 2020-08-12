@@ -6,6 +6,11 @@ on:
     - '**.ts'
     - '**.js'
     - '**.json'
+  pull_request:
+    paths:
+    - '**.ts'
+    - '**.js'
+    - '**.json'
 
 jobs:
   test:
