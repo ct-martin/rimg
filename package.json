@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Quick image resizer",
   "main": "server/server.ts",
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x"
+  },
   "scripts": {
     "build": "npm run tsc",
     "dev": "nodemon server/server.ts",
