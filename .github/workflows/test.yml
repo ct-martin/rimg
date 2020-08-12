@@ -1,10 +1,14 @@
-name: Node.js Tests
+name: Code Tests
 
-on: [push]
+on:
+  push:
+    paths:
+    - '**.ts'
+    - '**.js'
+    - '**.json'
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
 
     steps:
