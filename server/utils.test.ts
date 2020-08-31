@@ -4,7 +4,6 @@ import { Response as FetchResponse, RequestInit } from 'node-fetch';
 import {
   checkAllowedHostname,
   checkMime,
-  forwardHeaders,
   getDimension,
   getFetchOptions,
   getImgUrl,
@@ -12,11 +11,15 @@ import {
   getResizeOptions,
   passForwardHeaders,
 } from './utils';
+import * as CONSTANTS from './constants';
 
-describe('forwardHeaders', () => {
-  test('is an array', () => {
-    expect(Array.isArray(forwardHeaders)).toBe(true);
-  });
+jest.mock('./constants', () => {
+  const original = jest.requireActual('./constants');
+
+  return {
+    FORWARD_HEADERS: original.FORWARD_HEADERS,
+    get ALLOWED_HOSTNAMES() { return undefined; },
+  };
 });
 
 describe('getRequestUrl', () => {
@@ -57,17 +60,22 @@ describe('getImgUrl', () => {
 });
 
 describe('checkAllowedHostname', () => {
+  const spy = jest.spyOn(CONSTANTS.default, 'ALLOWED_HOSTNAMES', 'get');
   test('will pass if no allowlist', () => {
-    const names = undefined;
-    expect(checkAllowedHostname(names, 'example.com')).toBe(true);
+    spy.mockReturnValue(undefined);
+    expect(checkAllowedHostname('example.com')).toBe(true);
   });
   test('will fail if not on allowlist', () => {
-    const names = ['example.org'];
-    expect(checkAllowedHostname(names, 'example.com')).toBe(false);
+    spy.mockReturnValue(['example.org']);
+    expect(checkAllowedHostname('example.com')).toBe(false);
   });
   test('will pass if on allowlist', () => {
-    const names = ['example.com'];
-    expect(checkAllowedHostname(names, 'example.com')).toBe(true);
+    spy.mockReturnValue(['example.com']);
+    expect(checkAllowedHostname('example.com')).toBe(true);
+  });
+  test('will pass if on allowlist with multiple hostnames', () => {
+    spy.mockReturnValue(['example.org', 'example.com']);
+    expect(checkAllowedHostname('example.com')).toBe(true);
   });
 });
 
@@ -224,6 +232,8 @@ describe('getFetchOptions', () => {
 });
 
 describe('passForwardHeaders', () => {
+  const ALLOWED_HEADER = CONSTANTS.FORWARD_HEADERS[0];
+
   test('will not copy headers not in forwardHeaders', () => {
     const fetchRes = new FetchResponse();
     fetchRes.headers.set('x-foobar', 'baz');
@@ -235,22 +245,22 @@ describe('passForwardHeaders', () => {
   });
   test('will not copy headers not in forwardHeaders', () => {
     const fetchRes = new FetchResponse();
-    fetchRes.headers.set(forwardHeaders[0], 'foo');
+    fetchRes.headers.set(ALLOWED_HEADER, 'foo');
     const expressRes: any = {
       set: jest.fn(),
     };
     passForwardHeaders(fetchRes, expressRes);
     expect(expressRes.set.mock.calls.length).toBe(1);
-    expect(expressRes.set.mock.calls[0]).toEqual([forwardHeaders[0], 'foo']);
+    expect(expressRes.set.mock.calls[0]).toEqual([ALLOWED_HEADER, 'foo']);
   });
   test('will be case insensitive', () => {
     const fetchRes = new FetchResponse();
-    fetchRes.headers.set(forwardHeaders[0].toUpperCase(), 'foo');
+    fetchRes.headers.set(ALLOWED_HEADER.toUpperCase(), 'foo');
     const expressRes: any = {
       set: jest.fn(),
     };
     passForwardHeaders(fetchRes, expressRes);
     expect(expressRes.set.mock.calls.length).toBe(1);
-    expect(expressRes.set.mock.calls[0]).toEqual([forwardHeaders[0], 'foo']);
+    expect(expressRes.set.mock.calls[0]).toEqual([ALLOWED_HEADER, 'foo']);
   });
 });

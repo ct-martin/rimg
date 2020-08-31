@@ -2,14 +2,10 @@ import { Request as ExpressRequest, Response as ExpressResponse } from 'express'
 import sharp, { ResizeOptions, AvailableFormatInfo } from 'sharp';
 import { URL } from 'url';
 import { Response as FetchResponse, RequestInit } from 'node-fetch';
-
-// Headers to forward from server to client (for caching)
-export const forwardHeaders = [
-  'cache-control',
-  'expires',
-  'last-modified',
-  'access-control-allow-origin',
-];
+import {
+  ALLOWED_HOSTNAMES as HOSTNAMES,
+  FORWARD_HEADERS,
+} from './constants';
 
 /**
  * Converts an Express Request into its URL parts
@@ -38,7 +34,7 @@ export function getImgUrl(url: URL): URL | null {
  * @param hostname Hostname of image being fetched
  * @returns Boolean of whether allowed
  */
-export function checkAllowedHostname(HOSTNAMES: string[]|undefined, hostname: string): boolean {
+export function checkAllowedHostname(hostname: string): boolean {
   // If no allowlist, let anything pass
   if (!HOSTNAMES) {
     return true;
@@ -156,7 +152,7 @@ export function getFetchOptions(request: ExpressRequest): RequestInit {
  */
 export function passForwardHeaders(imgFetch: FetchResponse, res: ExpressResponse) {
   imgFetch.headers.forEach((value, name) => {
-    if (forwardHeaders.includes(name)) {
+    if (FORWARD_HEADERS.includes(name)) {
       res.set(name, value);
     }
   });
