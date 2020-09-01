@@ -1,9 +1,10 @@
-name: build
+name: Code Coverage Report
 on:
   push:
     branches:
       - master
     paths:
+      - '.github/workflows/coverage-report.yml'
       - '**.ts'
       - '**.js'
       - '**.json'
