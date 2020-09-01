@@ -25,11 +25,10 @@ jobs:
       with:
         node-version: '12.x'
     - run: npm ci
-    - run: npm test || echo 'no-fail'
     - name: Test & publish code coverage
       uses: paambaati/codeclimate-action@v2.6.0
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_ID }}
       with:
-        coverageCommand: npm run coverage
+        coverageCommand: npm run test
         debug: true
