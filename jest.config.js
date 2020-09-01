@@ -1,5 +1,11 @@
 module.exports = {
   collectCoverage: true,
+  collectCoverageFrom: [
+    'server/*.ts',
+    '!**.test.ts',
+    '!**/node_modules/**',
+    '!server/index.ts',
+  ],
   coverageThreshold: {
     global: {
       branches: 100,
@@ -10,4 +16,8 @@ module.exports = {
   },
   preset: 'ts-jest',
   testEnvironment: 'node',
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/dist/',
+  ]
 };
