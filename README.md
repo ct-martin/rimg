@@ -3,6 +3,8 @@ Image resizing microservice
 
 ![Code Tests](https://github.com/ct-martin/rimg/workflows/Code%20Tests/badge.svg?branch=master)
 [![pipeline status](https://gitlab.com/ctmartin/rimg/badges/master/pipeline.svg)](https://gitlab.com/ctmartin/rimg/-/commits/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/abca997c5b4cd3725645/maintainability)](https://codeclimate.com/github/ct-martin/rimg/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/abca997c5b4cd3725645/test_coverage)](https://codeclimate.com/github/ct-martin/rimg/test_coverage)
 
 ## Goals
 * Resize images
