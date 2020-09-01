@@ -73,7 +73,6 @@ export default async function handle(request: ExpressRequest, res: ExpressRespon
 
     // Send image
     res.type(`image/${info.format}`).send(data);
-    return;
   } catch (err) {
     res.status(500).send('Could not fetch');
   }
