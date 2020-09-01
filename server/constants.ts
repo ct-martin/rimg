@@ -1,10 +1,18 @@
 /**
- * Port to run the server on
+ * Gets port to run server on
  * Tries env vars (in order) PORT, NODE_PORT
  * Fallback of 3000
- * @return Number
+ * @return string|Number
  */
-export const PORT = process.env.PORT ?? process.env.NODE_PORT ?? 3000;
+export function getPort() {
+  return process.env.PORT ?? process.env.NODE_PORT ?? 3000;
+}
+
+/**
+ * Port to run the server on
+ * @return string|Number
+ */
+export const PORT = getPort();
 
 /**
  * Headers to forward from server to client (for caching)
