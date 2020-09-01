@@ -100,75 +100,56 @@ describe('getDimension', () => {
 
 describe('getResizeOptions', () => {
   // Note: takes string and parses for int
+
+  const options: ResizeOptions = {};
+
+  beforeEach(() => {
+    options.width = 100;
+    options.withoutEnlargement = true;
+  });
+
   test('will return no width or height if not specified', () => {
-    const options: ResizeOptions = {
-      withoutEnlargement: true,
-    };
+    options.width = undefined;
     const url = new URL('https://example.com/');
     expect(getResizeOptions(url)).toEqual(options);
   });
   test('will not error (and will instead prefer first) when multiple of the same parameter', () => {
-    const options: ResizeOptions = {
-      width: 100,
-      withoutEnlargement: true,
-    };
     const url = new URL('https://example.com/?maxwidth=100&maxwidth=90');
     expect(getResizeOptions(url)).toEqual(options);
   });
   test('will return width from ?maxwidth', () => {
-    const options: ResizeOptions = {
-      width: 100,
-      withoutEnlargement: true,
-    };
     const url = new URL('https://example.com/?maxwidth=100');
     expect(getResizeOptions(url)).toEqual(options);
   });
   test('will return width from ?width', () => {
-    const options: ResizeOptions = {
-      width: 100,
-      withoutEnlargement: true,
-    };
     const url = new URL('https://example.com/?width=100');
     expect(getResizeOptions(url)).toEqual(options);
   });
   test('will prefer ?maxwidth over ?width', () => {
-    const options: ResizeOptions = {
-      width: 100,
-      withoutEnlargement: true,
-    };
     const url = new URL('https://example.com/?maxwidth=100&width=90');
     expect(getResizeOptions(url)).toEqual(options);
   });
   test('will return height from ?maxheight', () => {
-    const options: ResizeOptions = {
-      height: 100,
-      withoutEnlargement: true,
-    };
+    options.height = 100;
+    options.width = undefined;
     const url = new URL('https://example.com/?maxheight=100');
     expect(getResizeOptions(url)).toEqual(options);
   });
   test('will return height from ?height', () => {
-    const options: ResizeOptions = {
-      height: 100,
-      withoutEnlargement: true,
-    };
+    options.height = 100;
+    options.width = undefined;
     const url = new URL('https://example.com/?height=100');
     expect(getResizeOptions(url)).toEqual(options);
   });
   test('will prefer ?maxheight over ?height', () => {
-    const options: ResizeOptions = {
-      height: 100,
-      withoutEnlargement: true,
-    };
+    options.height = 100;
+    options.width = undefined;
     const url = new URL('https://example.com/?maxheight=100&height=90');
     expect(getResizeOptions(url)).toEqual(options);
   });
   test('can return both a width and height', () => {
-    const options: ResizeOptions = {
-      height: 100,
-      width: 90,
-      withoutEnlargement: true,
-    };
+    options.height = 100;
+    options.width = 90;
     const url = new URL('https://example.com/?maxheight=100&maxwidth=90');
     expect(getResizeOptions(url)).toEqual(options);
   });
