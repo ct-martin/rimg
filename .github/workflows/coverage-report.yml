@@ -2,7 +2,7 @@ name: Code Coverage Report
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - '.github/workflows/coverage-report.yml'
       - '**.ts'
