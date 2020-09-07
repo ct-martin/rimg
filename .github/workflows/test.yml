@@ -3,6 +3,7 @@ name: Code Tests
 on:
   push:
     paths:
+      - '.github/workflows/test.yml'
       - '**.ts'
       - '**.js'
       - '**.json'
