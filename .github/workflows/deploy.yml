@@ -17,7 +17,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - run: git switch -C master # Copy b/c Dokku needs a master branch (default + ps:rebuild)
+      - name: Git Foo
+        run: |-
+          git fetch
+          git switch -C master # Copy b/c Dokku needs a master branch (default + ps:rebuild)
       - uses: spyoungtech/mirror-action@master
         with:
           REMOTE: ${{ secrets.GIT_REMOTE }}
