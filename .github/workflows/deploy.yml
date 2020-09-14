@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Git Foo # Copy main branch b/c Dokku needs a master branch (default + ps:rebuild)
         run: |-
-          git branch -C origin/main origin/master
+          cp .git/refs/remotes/origin/main .git/refs/remotes/origin/master
       - uses: spyoungtech/mirror-action@master
         with:
           REMOTE: ${{ secrets.GIT_REMOTE }}
